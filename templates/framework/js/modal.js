@@ -32,6 +32,7 @@
         this.$element.find(Modal.settings.closeSelector).on('click.modal', function () {
             Modal.settings._hideOverlay();
             if ($this.options.isAjax) $this.$element.remove();
+            return false;
         });
     };
 
@@ -47,6 +48,8 @@
             modalSelector:  '[data-type=modal]',
             toggleSelector: '[data-type=modal-toggle]',
             closeSelector:  '[data-type=modal-close]',
+
+            ajaxVar:        'sText',
 
             closeOnEsc:     true,
 
@@ -117,7 +120,7 @@
 
             // Center
             if (this.center && Modal.settings._windowHeight > this.$element.outerHeight()) { 
-                this.$element.css({'margin-top': (Modal.settings._windowHeight - this.$element.height()) / 2});
+                this.$element.css({'margin-top': (Modal.settings._windowHeight - this.$element.outerHeight()) / 2});
             }
         }
     };
@@ -171,11 +174,16 @@
                     Modal.settings._loader.show();
                     Modal.settings._showOverlay();
 
-                    ls.ajax(url, null, function () {
-                        var modal = $(this.result.sModal);
-                        Modal.settings._loader.hide();
-                        modal.data('object', (object = new Modal(modal, { isAjax: true })));
-                        modal.data('object').show();
+                    ls.ajax(url, null, function (result) {
+                        if (result.bStateError) {
+                            Modal.settings._hideOverlay();
+                            ls.msg.error('Error', result.sMsg);
+                        } else {
+                            var modal = $(result[Modal.settings.ajaxVar]);
+                            Modal.settings._loader.hide();
+                            modal.data('object', (object = new Modal(modal, { isAjax: true })));
+                            modal.data('object').show();
+                        }
                     }, {
                         error: function () {
                             Modal.settings._hideOverlay(function () {
