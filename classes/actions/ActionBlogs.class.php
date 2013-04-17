@@ -22,6 +22,10 @@
  * @since 1.0
  */
 class ActionBlogs extends Action {
+
+	protected $iPageCurrent=1;
+	protected $sPageRoot=null;
+	protected $aCategoriesCurrent=array();
 	/**
 	 * Инициализация
 	 */
@@ -32,6 +36,11 @@ class ActionBlogs extends Action {
 		$this->Lang_AddLangJs(array(
 								  'blog_join','blog_leave'
 							  ));
+		$this->sPageRoot=Router::GetPath('blogs');
+		/**
+		 * Устанавливаем title страницы
+		 */
+		$this->Viewer_AddHtmlTitle($this->Lang_Get('blog_menu_all_list'));
 	}
 	/**
 	 * Регистрируем евенты
@@ -39,6 +48,7 @@ class ActionBlogs extends Action {
 	protected function RegisterEvent() {
 		$this->AddEventPreg('/^(page([1-9]\d{0,5}))?$/i','EventShowBlogs');
 		$this->AddEventPreg('/^ajax-search$/i','EventAjaxSearch');
+		$this->AddEventPreg('/^[\w\-\_]+$/i','EventShowBlogsCategory');
 	}
 
 
@@ -78,6 +88,43 @@ class ActionBlogs extends Action {
 		$oViewer->Assign('sBlogsEmptyList',$this->Lang_Get('blogs_search_empty'));
 		$this->Viewer_AssignAjax('sText',$oViewer->Fetch("blog_list.tpl"));
 	}
+
+	protected function EventShowBlogsCategory() {
+		$aParams=$this->GetParams();
+		if (count($aParams)) {
+			if (preg_match('/^page(\d{1,5})$/i',$aParams[count($aParams)-1],$aMatch)) {
+				$this->iPageCurrent=$aMatch[1];
+				array_pop($aParams);
+			}
+		}
+		$sUrlFull=join('/',$aParams);
+		if ($sUrlFull!='') {
+			$sUrlFull=$this->sCurrentEvent.'/'.$sUrlFull;
+		} else {
+			$sUrlFull=$this->sCurrentEvent;
+		}
+
+		/**
+		 * Получаем текущую категорию
+		 */
+		if ($oCategory=$this->Blog_GetCategoryByUrlFull($sUrlFull)) {
+			$this->Viewer_AddHtmlTitle($oCategory->getTitle());
+			/**
+			 * Получаем все дочерние категории
+			 */
+			$aCategoriesId=$this->Blog_GetChildrenCategoriesById($oCategory->getId(),true);
+			$aCategoriesId[]=$oCategory->getId();
+
+			$this->aCategoriesCurrent=$aCategoriesId;
+			$this->sPageRoot=$oCategory->getUrlWeb();
+			$this->Viewer_Assign('oBlogCategoryCurrent',$oCategory);
+			$this->Viewer_Assign('sBlogsRootPage',$oCategory->getUrlWeb());
+		} else {
+			return $this->EventNotFound();
+		}
+
+		return $this->EventShowBlogs();
+	}
 	/**
 	 * Отображение списка блогов
 	 */
@@ -105,7 +152,13 @@ class ActionBlogs extends Action {
 		/**
 		 * Передан ли номер страницы
 		 */
-		$iPage=	preg_match("/^\d+$/i",$this->GetEventMatch(2)) ? $this->GetEventMatch(2) : 1;
+		$iPage=$this->iPageCurrent;
+		if ($this->GetEventMatch(2)) {
+			$iPage=$this->GetEventMatch(2);
+		}
+		if ($this->aCategoriesCurrent) {
+			$aFilter['category_id']=$this->aCategoriesCurrent;
+		}
 		/**
 		 * Получаем список блогов
 		 */
@@ -114,7 +167,7 @@ class ActionBlogs extends Action {
 		/**
 		 * Формируем постраничность
 		 */
-		$aPaging=$this->Viewer_MakePaging($aResult['count'],$iPage,Config::Get('module.blog.per_page'),Config::Get('pagination.pages.count'),Router::GetPath('blogs'),array('order'=>$sOrder,'order_way'=>$sOrderWay));
+		$aPaging=$this->Viewer_MakePaging($aResult['count'],$iPage,Config::Get('module.blog.per_page'),Config::Get('pagination.pages.count'),$this->sPageRoot,array('order'=>$sOrder,'order_way'=>$sOrderWay));
 		/**
 		 * Загружаем переменные в шаблон
 		 */
@@ -123,10 +176,6 @@ class ActionBlogs extends Action {
 		$this->Viewer_Assign("sBlogOrder",htmlspecialchars($sOrder));
 		$this->Viewer_Assign("sBlogOrderWay",htmlspecialchars($sOrderWay));
 		$this->Viewer_Assign("sBlogOrderWayNext",htmlspecialchars($sOrderWay=='desc' ? 'asc' : 'desc'));
-		/**
-		 * Устанавливаем title страницы
-		 */
-		$this->Viewer_AddHtmlTitle($this->Lang_Get('blog_menu_all_list'));
 		/**
 		 * Устанавливаем шаблон вывода
 		 */

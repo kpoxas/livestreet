@@ -1,5 +1,5 @@
 {if $sEvent=='add'}
-	{include file='header.tpl' menu='create'}
+	{include file='header.tpl' nav='create'}
 {else}
 	{include file='header.tpl'}
 	<h2 class="page-header">{$aLang.topic_photoset_edit}</h2>
@@ -20,7 +20,7 @@
 </script>
 
 
-{include file='modals/modal_photoset_add_photo.tpl'}
+{include file='modals/modal.photoset_add_photo.tpl'}
 
 
 {hook run='add_topic_photoset_begin'}
@@ -97,7 +97,7 @@
 			{/if}
 		</ul>
 
-		<a href="#" data-type="modal-toggle" data-modal-target="photoset-upload-form" class="link-dotted" id="photoset-start-upload">{$aLang.topic_photoset_upload_choose}</a>
+		<a href="#" data-type="modal-toggle" data-option-target="modal-photoset-upload" class="link-dotted" id="photoset-start-upload">{$aLang.topic_photoset_upload_choose}</a>
 	</div>
 
 

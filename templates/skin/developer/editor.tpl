@@ -3,19 +3,16 @@
 		{assign var="sSettingsTinymce" value="ls.settings.getTinymce()"}
 	{/if}
 
-	<script src="{cfg name='path.root.engine_lib'}/external/tinymce-jq/tiny_mce.js"></script>
+	<script src="{cfg name='path.static.framework'}/js/vendor/tinymce/tiny_mce.js"></script>
 	<script type="text/javascript">
 		jQuery(function($){
 			tinyMCE.init({$sSettingsTinymce});
 		});
 	</script>
 {else}
-	{if !$sImgToLoad}
-		{assign var="sImgToLoad" value="topic_text"}
-	{/if}
-	{include file='modals/modal_load_img.tpl' sToLoad=$sImgToLoad}
+	{include file='modals/modal.load_img.tpl'}
 
-	{if !$sSettingsTinymce}
+	{if !$sSettingsMarkitup}
 		{assign var="sSettingsMarkitup" value="ls.settings.getMarkitup()"}
 	{/if}
 	<script type="text/javascript">

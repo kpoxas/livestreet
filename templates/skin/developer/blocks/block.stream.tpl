@@ -14,12 +14,12 @@
 		</ul>
 		
 		
-		<div 
-			class="dropdown dropdown-toggle js-block-stream-dropdown" 
-			data-toggle="dropdown" 
-			data-dropdown-menu="js-dropdown-stream" 
-			data-dropdown-ajax="true" 
-			{if !$sItemsHook}style="display: none;"{/if}>{$aLang.block_stream_comments}</a></div>
+		<div
+			class="dropdown dropdown-toggle js-block-stream-dropdown js-dropdown-default" 
+			data-type="dropdown-toggle" 
+			data-option-target="js-dropdown-stream"
+			data-option-change-text="true"
+			{if !$sItemsHook}style="display: none;"{/if}>{$aLang.block_stream_comments}</div>
 		
 		<ul class="dropdown-menu js-block-stream-dropdown-items" id="js-dropdown-stream">
 			<li class="active js-block-stream-item" data-type="comment"><a href="#">{$aLang.block_stream_comments}</a></li>

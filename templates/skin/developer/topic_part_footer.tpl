@@ -32,10 +32,14 @@
 		</ul>
 		
 		
-		<div class="topic-share" id="topic_share_{$oTopic->getId()}">
-			{hookb run="topic_share" topic=$oTopic bTopicList=$bTopicList}
-				<div class="yashare-auto-init" data-yashareTitle="{$oTopic->getTitle()|escape:'html'}" data-yashareLink="{$oTopic->getUrl()}" data-yashareL10n="ru" data-yashareType="button" data-yashareQuickServices="yaru,vkontakte,facebook,twitter,odnoklassniki,moimir,lj,gplus"></div>
-			{/hookb}
+		{* Share block *}
+		<div class="popover" data-type="popover-target" id="topic_share_{$oTopic->getId()}">
+			<div class="popover-arrow"></div><div class="popover-arrow-inner"></div>
+			<div class="popover-content" data-type="popover-content">
+				{hookb run="topic_share" topic=$oTopic bTopicList=$bTopicList}
+					<div class="yashare-auto-init" data-yashareTitle="{$oTopic->getTitle()|escape:'html'}" data-yashareLink="{$oTopic->getUrl()}" data-yashareL10n="ru" data-yashareType="button" data-yashareQuickServices="yaru,vkontakte,facebook,twitter,odnoklassniki,moimir,lj,gplus"></div>
+				{/hookb}
+			</div>
 		</div>
 
 
@@ -62,7 +66,12 @@
 					{assign var="bVoteInfoShow" value=true}
 				{/if}
 				<div class="vote-up" onclick="return ls.vote.vote({$oTopic->getId()},this,1,'topic');"></div>
-				<div class="vote-count {if $bVoteInfoShow}js-infobox-vote-topic{/if}" id="vote_total_topic_{$oTopic->getId()}" title="{$aLang.topic_vote_count}: {$oTopic->getCountVote()}">
+				<div 
+					class="vote-count {if $bVoteInfoShow}js-tooltip{/if}" 
+					id="vote_total_topic_{$oTopic->getId()}" 
+					data-type="tooltip-toggle" 
+					data-option-target="vote-info-topic-{$oTopic->getId()}">
+
 					{if $bVoteInfoShow}
 						{if $oTopic->getRating() > 0}+{/if}{$oTopic->getRating()}
 					{else} 
@@ -70,12 +79,19 @@
 					{/if}
 				</div>
 				<div class="vote-down" onclick="return ls.vote.vote({$oTopic->getId()},this,-1,'topic');"></div>
+
+
 				{if $bVoteInfoShow}
-					<div id="vote-info-topic-{$oTopic->getId()}" style="display: none;">
-						+ {$oTopic->getCountVoteUp()}<br/>
-						- {$oTopic->getCountVoteDown()}<br/>
-						&nbsp; {$oTopic->getCountVoteAbstain()}<br/>
-						{hook run='topic_show_vote_stats' topic=$oTopic}
+					<div id="vote-info-topic-{$oTopic->getId()}" class="tooltip" data-type="tooltip-target">
+						<div class="tip-arrow"></div>
+						<div class="tooltip-content" data-type="tooltip-content">
+							<i class="icon-plus icon-white"></i> {$oTopic->getCountVoteUp()}<br />
+							<i class="icon-minus icon-white"></i> {$oTopic->getCountVoteDown()}<br />
+							<i class="icon-eye-open icon-white"></i> {$oTopic->getCountVoteAbstain()}<br />
+							{$aLang.topic_vote_count}: {$oTopic->getCountVote()}<br />
+
+							{hook run='topic_show_vote_stats' topic=$oTopic}
+						</div>
 					</div>
 				{/if}
 			</li>
@@ -85,7 +101,7 @@
 				<div onclick="return ls.favourite.toggle({$oTopic->getId()},this,'topic');" class="favourite {if $oUserCurrent && $oTopic->getIsFavourite()}active{/if}"></div>
 				<span class="favourite-count" id="fav_count_topic_{$oTopic->getId()}">{$oTopic->getCountFavourite()}</span>
 			</li>
-			<li class="topic-info-share"><a href="#" class="icon-share" title="{$aLang.topic_share}" onclick="jQuery('#topic_share_{$oTopic->getId()}').slideToggle(); return false;"></a></li>
+			<li class="topic-info-share"><a href="#" class="icon-share js-popover-default" title="{$aLang.topic_share}" data-type="popover-toggle" data-option-target="topic_share_{$oTopic->getId()}"></a></li>
 			
 			{if $bTopicList}
 				<li class="topic-info-comments">

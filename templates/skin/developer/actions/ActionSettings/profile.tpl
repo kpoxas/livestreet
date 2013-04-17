@@ -1,9 +1,9 @@
 {assign var="sidebarPosition" value='left'}
 
 {include file='header.tpl'}
-{include file='modals/modal_profile_avatar_upload.tpl'}
+{include file='modals/modal.profile_avatar_upload.tpl'}
 {include file='actions/ActionProfile/profile_top.tpl'}
-{include file='menu.settings.tpl'}
+{include file='navs/nav.settings.tpl'}
 
 
 <script type="text/javascript">

@@ -11,6 +11,7 @@
 .block .block-header h3 				{ font-size: 22px; line-height: 1em; font-weight: normal; font-family: 'PT Sans', sans-serif; }
 .block .block-header h3 a 				{ text-decoration: none; color: #333; }
 .block .block-header h3 a.link-dotted 	{ color: #5055B2; }
+.block .block-header .dropdown          { margin: 0; }
 .block .block-content 					{  }
 .block footer 							{ margin-top: 15px; font-size: 11px; color: #b9c2c2; }
 .block footer a							{ color: #727a90; }
@@ -23,7 +24,7 @@
 
 
 /* Block Type - Stream */
-.block .block-update 			{ position: absolute; top: 38px; right: 5px; width: 20px; height: 20px; background: url(../images/icons-synio.png) 0 -200px no-repeat; cursor: pointer; }
+.block .block-update 			{ position: absolute; bottom: 18px; right: 5px; width: 20px; height: 20px; background: url(../images/icons-synio.png) 0 -200px no-repeat; cursor: pointer; }
 .block .block-update:hover 		{ background-position: -20px -200px; }
 .block .block-update.active 	{ background-position: -40px -200px; }
 
@@ -118,3 +119,15 @@
 /* Block Type - Tags */
 .block.block-type-tags .search-form-wrapper { margin-bottom: 15px; }
 
+
+/* Block Type - Blog Categories */
+.block.block-type-blog-categories .block-header .blog-categories-admin       { position: absolute; top: 7px; right: 0; opacity: .3; }
+.block.block-type-blog-categories .block-header .blog-categories-admin:hover { opacity: 1; }
+
+.block.block-type-blog-categories li          { margin-bottom: 3px; }
+.block.block-type-blog-categories li a        { display: block; margin-bottom: 1px; padding: 5px 10px; border-radius: 3px; }
+.block.block-type-blog-categories li.active a { color: #fff; text-decoration: none; background: #3ABCFF; }
+
+
+/* Block Type - Blog Navigation */
+.block.block-type-blog-navigation .blog-navigator-categories option:first-child { color: #aaa; }

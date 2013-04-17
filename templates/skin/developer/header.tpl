@@ -37,6 +37,7 @@
 	<script type="text/javascript">
 		var DIR_WEB_ROOT 			= '{cfg name="path.root.web"}';
 		var DIR_STATIC_SKIN 		= '{cfg name="path.static.skin"}';
+        var DIR_STATIC_FRAMEWORK 	= '{cfg name="path.static.framework"}';
 		var DIR_ROOT_ENGINE_LIB 	= '{cfg name="path.root.engine_lib"}';
 		var LIVESTREET_SECURITY_KEY = '{$LIVESTREET_SECURITY_KEY}';
 		var SESSION_ID				= '{$_sPhpSessionId}';
@@ -60,6 +61,7 @@
 	<script type="text/javascript">
 		var tinyMCE = false;
 		ls.lang.load({json var = $aLangJs});
+		ls.lang.load({lang_load name="blog"});
 		ls.registry.set('comment_max_tree',{json var=$oConfig->Get('module.comment.max_tree')});
 		ls.registry.set('block_stream_show_tip',{json var=$oConfig->Get('block.stream.show_tip')});
 	</script>
@@ -114,10 +116,10 @@
 
 
 	{if $oUserCurrent}
-		{include file='modals/modal_write.tpl'}
-		{include file='modals/modal_favourite_form_tags.tpl'}
+		{include file='modals/modal.write.tpl'}
+		{include file='modals/modal.favourite_form_tags.tpl'}
 	{else}
-		{include file='modals/modal_login.tpl'}
+		{include file='modals/modal.login.tpl'}
 	{/if}
 
 
