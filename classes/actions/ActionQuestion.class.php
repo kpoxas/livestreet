@@ -152,6 +152,8 @@ class ActionQuestion extends Action {
 				$_REQUEST['answer'][]=$aAnswer['text'];
 			}
 		}
+
+		$this->Viewer_Assign('oTopicEdit', $oTopic);
 	}
 	/**
 	 * Добавление топика
