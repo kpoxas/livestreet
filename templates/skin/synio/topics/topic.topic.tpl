@@ -1,7 +1,13 @@
+{**
+ * Обычный топик
+ *
+ * @styles css/topic.css
+ *}
+
 {extends file='topics/topic_base.tpl'}
 
 
-{block name='content'}
+{block name='topic_content'}
 	{if $bTopicList}
 		{$oTopic->getTextShort()}
 		

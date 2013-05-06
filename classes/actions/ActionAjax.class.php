@@ -605,7 +605,7 @@ class ActionAjax extends Action {
 			$this->Message_AddNoticeSingle($this->Lang_Get('topic_question_vote_ok'),$this->Lang_Get('attention'));
 			$oViewer=$this->Viewer_GetLocalViewer();
 			$oViewer->Assign('oTopic',$oTopic);
-			$this->Viewer_AssignAjax('sText',$oViewer->Fetch("question_result.tpl"));
+			$this->Viewer_AssignAjax('sText',$oViewer->Fetch("topics/question_result.tpl"));
 		} else {
 			$this->Message_AddErrorSingle($this->Lang_Get('system_error'),$this->Lang_Get('error'));
 			return;
@@ -1079,9 +1079,9 @@ class ActionAjax extends Action {
 		 */
 		$oViewer=$this->Viewer_GetLocalViewer();
 		$oViewer->Assign('oTopic',$oTopic);
-		$sTemplate="topic_preview_{$oTopic->getType()}.tpl";
+		$sTemplate="topics/topic_preview_{$oTopic->getType()}.tpl";
 		if (!$this->Viewer_TemplateExists($sTemplate)) {
-			$sTemplate='topic_preview_topic.tpl';
+			$sTemplate='topics/topic_preview_topic.tpl';
 		}
 		$sTextResult=$oViewer->Fetch($sTemplate);
 		/**

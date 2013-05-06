@@ -1,4 +1,3 @@
-{assign var="sidebarPosition" value='left'}
 {include file='header.tpl'}
 
 
@@ -8,5 +7,5 @@
 
 
 
-{include file='topic_list.tpl'}
+{include file='topics/topic_list.tpl'}
 {include file='footer.tpl'}

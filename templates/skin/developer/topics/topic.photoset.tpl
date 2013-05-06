@@ -1,8 +1,14 @@
+{**
+ * Топик фотосет
+ *
+ * @styles css/topic.css
+ *}
+
 {extends file='topics/topic_base.tpl'}
 
 
 {* Preview Image *}
-{block name='header_after'}
+{block name='topic_header_after'}
 	{assign var=oMainPhoto value=$oTopic->getPhotosetMainPhoto()}
 
 	{if $oMainPhoto}
@@ -21,8 +27,7 @@
 {/block}
 
 
-{* Content *}
-{block name='content'}
+{block name='topic_content'}
 	{if $bTopicList}
 		{$oTopic->getTextShort()}
 
@@ -45,7 +50,7 @@
 
 
 {* Photoset *}
-{block name='content_after'}
+{block name='topic_content_after'}
 	{if !$bTopicList}
 		<script type="text/javascript">
 			jQuery(document).ready(function($) {	

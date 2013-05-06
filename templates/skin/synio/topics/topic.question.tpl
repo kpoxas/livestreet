@@ -1,7 +1,13 @@
+{**
+ * Топик опрос
+ *
+ * @styles css/topic.css
+ *}
+
 {extends file='topics/topic_base.tpl'}
 
 
-{block name='header_after'}
+{block name='topic_header_after'}
 	<div id="topic_question_area_{$oTopic->getId()}" class="poll">
 		{if !$oTopic->getUserQuestionIsVote()}
 			<ul class="poll-vote">
@@ -24,7 +30,7 @@
 			
 			<input type="hidden" id="topic_answer_{$oTopic->getId()}_value" value="-1" />
 		{else}
-			{include file='question_result.tpl'}
+			{include file='topics/question_result.tpl'}
 		{/if}
 	</div>
 {/block}

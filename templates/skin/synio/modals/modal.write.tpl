@@ -1,15 +1,20 @@
+{**
+ * Модальное с меню "Создать"
+ *
+ * @styles css/modals.css
+ *}
+
 {extends file='modals/modal_base.tpl'}
 
-{block name='options'}
-	{assign var='noTitle' value=true}
-	{assign var='noFooter' value=true}
+{block name='modal_options'}
+	{assign var='noModalTitle' value=true}
+	{assign var='noModalFooter' value=true}
 {/block}
 
-{block name='id'}modal-write{/block}
-{block name='class'}modal-write js-modal-default{/block}
-{block name='title'}{$aLang.block_create}{/block}
+{block name='modal_id'}modal-write{/block}
+{block name='modal_class'}modal-write js-modal-default{/block}
 	
-{block name='content'}
+{block name='modal_content'}
 	{strip}
 		<ul class="write-list">
 			{if $iUserCurrentCountTopicDraft}
