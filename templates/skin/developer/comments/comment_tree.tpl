@@ -5,7 +5,7 @@
  *}
 
 {* Добавляем в тулбар кнопку обновления комментариев *}
-{add_block group='toolbar' name='toolbar_comment.tpl'
+{add_block group='toolbar' name='toolbar/toolbar_comment.tpl'
 	aPagingCmt=$aPagingCmt
 	iTargetId=$iTargetId
 	sTargetType=$sTargetType
@@ -61,7 +61,7 @@
 		
 		<div class="comment-wrapper" id="comment_wrapper_id_{$oComment->getId()}">
 		
-		{include file='comment.tpl'}
+		{include file='comments/comment.tpl'}
 
 		{$nesting = $cmtlevel}
 
@@ -75,7 +75,7 @@
 {**
  * Страницы
  *}
-{include file='comment_paging.tpl' aPagingCmt=$aPagingCmt}
+{include file='comments/comment_paging.tpl' aPagingCmt=$aPagingCmt}
 
 {hook run='comment_tree_end' iTargetId=$iTargetId sTargetType=$sTargetType}
 
